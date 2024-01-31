@@ -1,9 +1,7 @@
 from pydantic import BaseModel
 
-from models.models import TrelloChoiceEnum
 
-
-class BoardScheme(BaseModel):
-    board_name: str
-    visibility: TrelloChoiceEnum
-    background: int
+class AddBoardUserSchema(BaseModel):
+    id: int
+    board_id: int
+    user_id: int
