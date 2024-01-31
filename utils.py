@@ -1,3 +1,4 @@
+import requests
 import os
 import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -20,3 +21,13 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
         raise HTTPException(status_code=401, detail="Token has expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
+
+
+def request_api_for_user_data(email):
+    url = f'http://localhost:8000/auth/get-user-data{email}'
+    payload = {
+        "email": email
+    }
+    response = requests.get(url, json=payload)
+    response_data = response.json()
+    return response_data
