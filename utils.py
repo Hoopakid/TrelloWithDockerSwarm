@@ -1,7 +1,5 @@
 import os
 import jwt
-import secrets
-from datetime import datetime, timedelta
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException
 from dotenv import load_dotenv
