@@ -13,14 +13,6 @@ class TrelloChoiceEnum(enum.Enum):
     workspace = "Workspace"
 
 
-class BoardBackground(Base):
-    __tablename__ = "background"
-    metadata = metadata
-
-    id = Column(Integer, index=True, autoincrement=True, primary_key=True)
-    background = Column(String)
-
-
 class Board(Base):
     __tablename__ = "board"
     metadata = metadata
@@ -29,7 +21,7 @@ class Board(Base):
     board_name = Column(String)
     user_id = Column(Integer)
     visibility = Column(Enum(TrelloChoiceEnum), default=TrelloChoiceEnum.public)
-    background = Column(Integer, ForeignKey("background.id"))
+    background = Column(String)
     created_at = Column(TIMESTAMP, default=datetime.utcnow)
 
 
@@ -38,6 +30,7 @@ class BoardTable(Base):
 
     id = Column(Integer, index=True, autoincrement=True, primary_key=True)
     title = Column(String)
+    board_id = Column(Integer, ForeignKey("board.id"))
 
 
 class BoardUsers(Base):
@@ -54,4 +47,4 @@ class TaskTable(Base):
 
     id = Column(Integer, index=True, autoincrement=True, primary_key=True)
     message = Column(String)
-    board_id = Column(Integer, ForeignKey("boardtable.id"))
+    boardtable_id = Column(Integer, ForeignKey("boardtable.id"))

@@ -29,5 +29,5 @@ def request_api_for_user_data(email):
         "email": email
     }
     response = requests.get(url, json=payload)
-    response_data = response.json()
-    return response_data
+    response.raise_for_status()
+    return response.json()
