@@ -1,0 +1,17 @@
+version: "3.11"
+
+services:
+  boards:
+    image: hoopakid/boards_a:latest
+    environment:
+      - ./.env
+    deploy:
+      replicas: 2
+    ports:
+      - "8001:8000"
+    networks:
+      - board
+
+networks:
+  board:
+    external: true

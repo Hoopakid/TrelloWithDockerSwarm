@@ -83,7 +83,14 @@ async def create_board(
         visibility: TrelloChoiceEnum,
         background: UploadFile = File(...),
         session: AsyncSession = Depends(get_async_session),
+        token: dict = Depends(verify_token)
 ):
+    if token is None:
+        raise HTTPException(
+            detail="Unauthorized",
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+    user_id = token.get('user_id')
     try:
         out_file = f'uploads/files/{background.filename}'
         async with aiofiles.open(out_file, 'wb') as f:
@@ -92,7 +99,7 @@ async def create_board(
 
         insert_query = insert(Board).values(
             board_name=board_name,
-            user_id=1,
+            user_id=user_id,
             visibility=visibility,
             background=out_file
         )
